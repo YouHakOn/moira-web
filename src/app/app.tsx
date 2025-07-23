@@ -1,25 +1,14 @@
-import { useState } from 'react'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '~shared/queryClient'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import Router from './router'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Router />
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   )
 }
 
