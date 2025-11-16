@@ -9,15 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './../pages/__root'
-import { Route as LoginRouteImport } from './../pages/login'
 import { Route as AuthenticatedRouteImport } from './../pages/_authenticated'
 import { Route as IndexRouteImport } from './../pages/index'
+import { Route as AuthLoginRouteImport } from './../pages/auth/login'
+import { Route as AuthJoinRouteRouteImport } from './../pages/auth/join/route'
+import { Route as AuthJoinSuccessRouteImport } from './../pages/auth/join/success'
 
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
@@ -27,44 +24,65 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthJoinRouteRoute = AuthJoinRouteRouteImport.update({
+  id: '/auth/join',
+  path: '/auth/join',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthJoinSuccessRoute = AuthJoinSuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => AuthJoinRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
+  '/auth/join': typeof AuthJoinRouteRouteWithChildren
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/join/success': typeof AuthJoinSuccessRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
+  '/auth/join': typeof AuthJoinRouteRouteWithChildren
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/join/success': typeof AuthJoinSuccessRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRoute
-  '/login': typeof LoginRoute
+  '/auth/join': typeof AuthJoinRouteRouteWithChildren
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/join/success': typeof AuthJoinSuccessRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login'
+  fullPaths: '/' | '/auth/join' | '/auth/login' | '/auth/join/success'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login'
-  id: '__root__' | '/' | '/_authenticated' | '/login'
+  to: '/' | '/auth/join' | '/auth/login' | '/auth/join/success'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth/join'
+    | '/auth/login'
+    | '/auth/join/success'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRoute
-  LoginRoute: typeof LoginRoute
+  AuthJoinRouteRoute: typeof AuthJoinRouteRouteWithChildren
+  AuthLoginRoute: typeof AuthLoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
@@ -79,13 +97,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/join': {
+      id: '/auth/join'
+      path: '/auth/join'
+      fullPath: '/auth/join'
+      preLoaderRoute: typeof AuthJoinRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/join/success': {
+      id: '/auth/join/success'
+      path: '/success'
+      fullPath: '/auth/join/success'
+      preLoaderRoute: typeof AuthJoinSuccessRouteImport
+      parentRoute: typeof AuthJoinRouteRoute
+    }
   }
 }
+
+interface AuthJoinRouteRouteChildren {
+  AuthJoinSuccessRoute: typeof AuthJoinSuccessRoute
+}
+
+const AuthJoinRouteRouteChildren: AuthJoinRouteRouteChildren = {
+  AuthJoinSuccessRoute: AuthJoinSuccessRoute,
+}
+
+const AuthJoinRouteRouteWithChildren = AuthJoinRouteRoute._addFileChildren(
+  AuthJoinRouteRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRoute,
-  LoginRoute: LoginRoute,
+  AuthJoinRouteRoute: AuthJoinRouteRouteWithChildren,
+  AuthLoginRoute: AuthLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
