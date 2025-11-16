@@ -38,7 +38,6 @@ interface CheckCodeResponse {
 
 function RouteComponent() {
   const [isCreateCode, setIsCreateCode] = useState<boolean>(false)
-  const [isCheckCode, setIsCheckCode] = useState<boolean>(false)
 
   const router = useRouter()
 
@@ -55,10 +54,21 @@ function RouteComponent() {
   })
 
   // TODO: 전체 회원가입 데이터 post
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    router.navigate({
-      to: 'auth/join/success'
-    })
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    try {
+      console.log(data)
+      const res = await authInstance.post<typeof data>(`/member/signIn`, {
+        email: watch('email'),
+        nickName: watch('nickname'),
+        password: watch('password')
+      }) // 인증요청 성공
+      router.navigate({
+        to: 'auth/join/success'
+      })
+      console.log(`회원가입 성공: ${res.data}`)
+    } catch (err: any) {
+      console.log(`회원가입 실패: ${err.message}`)
+    }
   }
 
   const createCode = async () => {
@@ -71,7 +81,7 @@ function RouteComponent() {
       setIsCreateCode(true) // 인증번호 확인란 활성화
       console.log(`생성 성공: ${res.data}`)
     } catch (err: any) {
-      console.log(`생성 실패: ${err}`) // 인증요청 실패
+      console.log(`생성 실패: ${err.message}`) // 인증요청 실패
       setError('email', {
         type: 'server',
         message: '인증요청에 실패했습니다'
