@@ -97,7 +97,6 @@ function RouteComponent() {
       const res = await authInstance.get<CheckCodeResponse>(
         `/cert/check/${emailInput}/${codeInput}`
       )
-      setIsCheckCode(true)
       console.log(`인증 성공: ${res.data}`)
     } catch (err: any) {
       console.log(`인증 실패: ${err}`)

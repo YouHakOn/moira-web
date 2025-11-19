@@ -23,6 +23,12 @@ interface AuthResponse {
   password: string
 }
 
+interface MyInfo {
+  id: number
+  mail: string
+  nickname: string
+}
+
 function LoginComponent() {
   const router = useRouter()
   const { redirect } = Route.useSearch()
@@ -30,6 +36,7 @@ function LoginComponent() {
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const { login } = useUserStore()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -41,14 +48,27 @@ function LoginComponent() {
         password: password
       })
       console.log(res)
-      console.log('로그인됨')
+      // localStorage에 토큰 설정
+      const token = res.headers['authorization']
+      localStorage.setItem('accessToken', token)
+      updateMyInfo()
       router.history.push(redirect)
     } catch (err: any) {
       console.log(err)
-      console.log(err.response?.data)
       setError(err.message || 'Login failed')
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  // 내 정보(nickname, mail, imgUrl) 업뎃
+  const updateMyInfo = async () => {
+    try {
+      const res = await authInstance.get<MyInfo>('/member/myInfo')
+      const { id, mail, nickname } = res.data
+      login(id, nickname, mail)
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -60,7 +80,6 @@ function LoginComponent() {
     onError: () => {
       console.log('Login Failed')
     }
-
     // 추가 옵션 설정 가능
   })
 
