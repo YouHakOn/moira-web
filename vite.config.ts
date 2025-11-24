@@ -34,6 +34,7 @@ export default defineConfig({
         target: 'http://localhost:8080',
         // target으로 변경
         changeOrigin: true,
+        secure: false,
         // 요청 경로에서 '/api' 제거
         rewrite: (path) => path.replace(/^\/api/, '')
       }

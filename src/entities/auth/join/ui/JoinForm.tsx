@@ -73,7 +73,7 @@ export default function JoinForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormInput label="이메일" error={errors.email}>
+      <FormInput label="이메일" error={errors.email?.message}>
         <input {...register('email')} placeholder="이메일을 입력해주세요" />
         <button type="button" onClick={onRequestCode}>
           인증요청
@@ -83,7 +83,7 @@ export default function JoinForm() {
         )}
       </FormInput>
       <fieldset disabled={!isCreateCode}>
-        <FormInput label="인증번호" error={errors.code}>
+        <FormInput label="인증번호" error={errors.code?.message}>
           <input {...register('code')} placeholder="인증번호를 입력해주세요" />
           <button type="button" onClick={onCheckCode}>
             확인
@@ -93,13 +93,13 @@ export default function JoinForm() {
           )}
         </FormInput>
       </fieldset>
-      <FormInput label="닉네임" error={errors.nickname}>
+      <FormInput label="닉네임" error={errors.nickname?.message}>
         <input {...register('nickname')} placeholder="다른 회원에게 표시되는 이름이에요" />
       </FormInput>
-      <FormInput label="비밀번호" error={errors.password}>
+      <FormInput label="비밀번호" error={errors.password?.message}>
         <input {...register('password')} placeholder="비밀번호를 입력해주세요" />
       </FormInput>
-      <FormInput label="" error={errors.confirmPassword}>
+      <FormInput label="" error={errors.confirmPassword?.message}>
         <input {...register('confirmPassword')} placeholder="비밀번호를 한 번 더 입력해주세요" />
       </FormInput>
       <input type="submit" />

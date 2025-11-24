@@ -1,18 +1,10 @@
-import { createFileRoute, redirect, useRouter } from '@tanstack/react-router'
-import { useUserStore } from '~entities/user/model/userStore'
+import { createFileRoute, useRouter } from '@tanstack/react-router'
 import LoginForm from '~entities/auth/login/ui/LoginForm'
 
 export const Route = createFileRoute('/auth/login')({
   validateSearch: (search) => ({
     redirect: (search.redirect as string) || '/'
   }),
-  beforeLoad: ({ search }) => {
-    const { isLoggedIn } = useUserStore.getState()
-    console.log(search)
-    if (isLoggedIn) {
-      throw redirect({ to: search.redirect })
-    }
-  },
   component: LoginComponent
 })
 

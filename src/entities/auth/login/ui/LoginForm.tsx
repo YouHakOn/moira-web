@@ -16,9 +16,10 @@ export default function LoginForm({ redirect }: { redirect: () => void }) {
     try {
       const res = await getLogin(email, password)
       // localStorage에 토큰 설정
-      const token = res.headers['authorization']
+      const authHeader = res.headers['authorization']
+      const token = authHeader?.split(' ')[1]
       localStorage.setItem('accessToken', token)
-      updateMyInfo()
+      await updateMyInfo()
       redirect()
     } catch (err: any) {
       console.log(err)
@@ -34,6 +35,7 @@ export default function LoginForm({ redirect }: { redirect: () => void }) {
       const res = await getMyInfo()
       const { id, mail, nickname } = res
       login(id, nickname, mail)
+      return
     } catch (err) {
       console.log(err)
     }
