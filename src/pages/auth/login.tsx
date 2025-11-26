@@ -4,7 +4,7 @@ import { authInstance } from '~shared/api/instance'
 import { useUserStore } from '~entities/user/model/userStore'
 import { useGoogleLogin } from '@react-oauth/google'
 
-export const Route = createFileRoute('/login')({
+export const Route = createFileRoute('/auth/login')({
   validateSearch: (search) => ({
     redirect: (search.redirect as string) || '/'
   }),
@@ -18,9 +18,15 @@ export const Route = createFileRoute('/login')({
   component: LoginComponent
 })
 
-interface AuthResponse {
+interface LoginReq {
   mail: string
   password: string
+}
+
+interface MyInfo {
+  id: number
+  mail: string
+  nickname: string
 }
 
 function LoginComponent() {
@@ -30,39 +36,55 @@ function LoginComponent() {
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const { login } = useUserStore()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError('')
     try {
-      const res = await authInstance.post<AuthResponse>('/member/login', {
+      const res = await authInstance.post<LoginReq>('/member/login', {
         mail: email,
         password: password
       })
       console.log(res)
-      console.log('로그인됨')
+      // localStorage에 토큰 설정
+      const token = res.headers['authorization']
+      localStorage.setItem('accessToken', token)
+      updateMyInfo()
       router.history.push(redirect)
     } catch (err: any) {
       console.log(err)
-      console.log(err.response?.data)
       setError(err.message || 'Login failed')
     } finally {
       setIsLoading(false)
     }
   }
 
-  const handleOAuthLogin = useGoogleLogin({
-    onSuccess: (credentialResponse) => {
-      console.log(credentialResponse)
-      router.history.push(redirect)
-    },
-    onError: () => {
-      console.log('Login Failed')
+  // userInfo(nickname, mail, imgUrl) 업뎃
+  const updateMyInfo = async () => {
+    try {
+      const res = await authInstance.get<MyInfo>('/member/myInfo')
+      const { id, mail, nickname } = res.data
+      login(id, nickname, mail)
+    } catch (err) {
+      console.log(err)
     }
 
     // 추가 옵션 설정 가능
-  })
+  }
+
+  /* 소셜 로그인
+  const handleSocialLogin = async (provider: 'google' | 'kakao' | 'naver') => {
+    try {
+      const res = await authInstance.get(`/member/oauth2/authorization/jso878729@gmail.com`)
+      const token = res.headers['authorization']
+      localStorage.setItem('accessToken', token)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  */
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -119,7 +141,7 @@ function LoginComponent() {
 
         <button
           type="button"
-          onClick={() => handleOAuthLogin()}
+          // onClick={() => handleSocialLogin('google')}
           className="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
         >
           Continue with Google
