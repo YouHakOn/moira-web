@@ -2,7 +2,6 @@ import { createFileRoute, redirect, useRouter } from '@tanstack/react-router'
 import { useState } from 'react'
 import { authInstance } from '~shared/api/instance'
 import { useUserStore } from '~entities/user/model/userStore'
-import { useGoogleLogin } from '@react-oauth/google'
 
 export const Route = createFileRoute('/auth/login')({
   validateSearch: (search) => ({
