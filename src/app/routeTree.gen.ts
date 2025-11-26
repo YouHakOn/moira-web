@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './../pages/__root'
 import { Route as RoomRouteImport } from './../pages/room'
+import { Route as BoardRouteImport } from './../pages/board'
 import { Route as AuthenticatedRouteImport } from './../pages/_authenticated'
 import { Route as IndexRouteImport } from './../pages/index'
 import { Route as AuthLoginRouteImport } from './../pages/auth/login'
@@ -19,6 +20,11 @@ import { Route as AuthJoinSuccessRouteImport } from './../pages/auth/join/succes
 const RoomRoute = RoomRouteImport.update({
   id: '/room',
   path: '/room',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BoardRoute = BoardRouteImport.update({
+  id: '/board',
+  path: '/board',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
@@ -48,6 +54,7 @@ const AuthJoinSuccessRoute = AuthJoinSuccessRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/board': typeof BoardRoute
   '/room': typeof RoomRoute
   '/auth/join': typeof AuthJoinRouteRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
@@ -55,6 +62,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/board': typeof BoardRoute
   '/room': typeof RoomRoute
   '/auth/join': typeof AuthJoinRouteRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
@@ -64,6 +72,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRoute
+  '/board': typeof BoardRoute
   '/room': typeof RoomRoute
   '/auth/join': typeof AuthJoinRouteRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
@@ -71,13 +80,26 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/room' | '/auth/join' | '/auth/login' | '/auth/join/success'
+  fullPaths:
+    | '/'
+    | '/board'
+    | '/room'
+    | '/auth/join'
+    | '/auth/login'
+    | '/auth/join/success'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/room' | '/auth/join' | '/auth/login' | '/auth/join/success'
+  to:
+    | '/'
+    | '/board'
+    | '/room'
+    | '/auth/join'
+    | '/auth/login'
+    | '/auth/join/success'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/board'
     | '/room'
     | '/auth/join'
     | '/auth/login'
@@ -87,6 +109,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRoute
+  BoardRoute: typeof BoardRoute
   RoomRoute: typeof RoomRoute
   AuthJoinRouteRoute: typeof AuthJoinRouteRouteWithChildren
   AuthLoginRoute: typeof AuthLoginRoute
@@ -99,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/room'
       fullPath: '/room'
       preLoaderRoute: typeof RoomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/board': {
+      id: '/board'
+      path: '/board'
+      fullPath: '/board'
+      preLoaderRoute: typeof BoardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -154,6 +184,7 @@ const AuthJoinRouteRouteWithChildren = AuthJoinRouteRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRoute,
+  BoardRoute: BoardRoute,
   RoomRoute: RoomRoute,
   AuthJoinRouteRoute: AuthJoinRouteRouteWithChildren,
   AuthLoginRoute: AuthLoginRoute,
