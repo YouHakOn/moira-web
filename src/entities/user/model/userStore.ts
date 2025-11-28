@@ -1,12 +1,13 @@
 import { create } from 'zustand'
+import { useProjectsStore } from '~entities/project/model/projectStore'
 
-interface UserState {
+export interface UserState {
   id: number | null
   isLoggedIn: boolean
   nickName: string | null
   mail: string | null
   imgUrl: string | null
-  login: (id: number, userName: string, mail: string, imgUrl?: string|null) => void
+  login: (id: number, userName: string, mail: string, imgUrl?: string | null) => void
   logout: () => void
 }
 
@@ -18,7 +19,13 @@ export const useUserStore = create<UserState>((set) => {
     nickName: null,
     mail: null,
     imgUrl: null,
-    login: (id, nickName, mail, imgUrl) => set({ id, isLoggedIn: true, nickName, mail, imgUrl }),
-    logout: () => set({ id: null, isLoggedIn: false, nickName: null, mail: null, imgUrl: null })
+    login: (id, nickName, mail, imgUrl) => {
+      set({ id, isLoggedIn: true, nickName, mail, imgUrl })
+      useProjectsStore.getState().fetchProjects()
+    },
+    logout: () => {
+      set({ id: null, isLoggedIn: false, nickName: null, mail: null, imgUrl: null })
+      useProjectsStore.getState().clear()
+    }
   }
 })

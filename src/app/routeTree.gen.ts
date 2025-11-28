@@ -13,6 +13,7 @@ import { Route as RoomRouteImport } from './../pages/room'
 import { Route as BoardRouteImport } from './../pages/board'
 import { Route as AuthenticatedRouteImport } from './../pages/_authenticated'
 import { Route as IndexRouteImport } from './../pages/index'
+import { Route as ProjectsProjectIdRouteImport } from './../pages/projects/$projectId'
 import { Route as AuthLoginRouteImport } from './../pages/auth/login'
 import { Route as AuthJoinRouteRouteImport } from './../pages/auth/join/route'
 import { Route as AuthJoinSuccessRouteImport } from './../pages/auth/join/success'
@@ -20,36 +21,41 @@ import { Route as AuthJoinSuccessRouteImport } from './../pages/auth/join/succes
 const RoomRoute = RoomRouteImport.update({
   id: '/room',
   path: '/room',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => rootRouteImport
 } as any)
 const BoardRoute = BoardRouteImport.update({
   id: '/board',
   path: '/board',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => rootRouteImport
 } as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => rootRouteImport
 } as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => rootRouteImport
+} as any)
+const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
+  id: '/projects/$projectId',
+  path: '/projects/$projectId',
+  getParentRoute: () => rootRouteImport
 } as any)
 const AuthLoginRoute = AuthLoginRouteImport.update({
   id: '/auth/login',
   path: '/auth/login',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => rootRouteImport
 } as any)
 const AuthJoinRouteRoute = AuthJoinRouteRouteImport.update({
   id: '/auth/join',
   path: '/auth/join',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => rootRouteImport
 } as any)
 const AuthJoinSuccessRoute = AuthJoinSuccessRouteImport.update({
   id: '/success',
   path: '/success',
-  getParentRoute: () => AuthJoinRouteRoute,
+  getParentRoute: () => AuthJoinRouteRoute
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/room': typeof RoomRoute
   '/auth/join': typeof AuthJoinRouteRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/auth/join/success': typeof AuthJoinSuccessRoute
 }
 export interface FileRoutesByTo {
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/room': typeof RoomRoute
   '/auth/join': typeof AuthJoinRouteRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/auth/join/success': typeof AuthJoinSuccessRoute
 }
 export interface FileRoutesById {
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/room': typeof RoomRoute
   '/auth/join': typeof AuthJoinRouteRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/auth/join/success': typeof AuthJoinSuccessRoute
 }
 export interface FileRouteTypes {
@@ -86,6 +95,7 @@ export interface FileRouteTypes {
     | '/room'
     | '/auth/join'
     | '/auth/login'
+    | '/projects/$projectId'
     | '/auth/join/success'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
     | '/room'
     | '/auth/join'
     | '/auth/login'
+    | '/projects/$projectId'
     | '/auth/join/success'
   id:
     | '__root__'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
     | '/room'
     | '/auth/join'
     | '/auth/login'
+    | '/projects/$projectId'
     | '/auth/join/success'
   fileRoutesById: FileRoutesById
 }
@@ -113,6 +125,7 @@ export interface RootRouteChildren {
   RoomRoute: typeof RoomRoute
   AuthJoinRouteRoute: typeof AuthJoinRouteRouteWithChildren
   AuthLoginRoute: typeof AuthLoginRoute
+  ProjectsProjectIdRoute: typeof ProjectsProjectIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -145,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projects/$projectId': {
+      id: '/projects/$projectId'
+      path: '/projects/$projectId'
+      fullPath: '/projects/$projectId'
+      preLoaderRoute: typeof ProjectsProjectIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/login': {
       id: '/auth/login'
       path: '/auth/login'
@@ -174,11 +194,11 @@ interface AuthJoinRouteRouteChildren {
 }
 
 const AuthJoinRouteRouteChildren: AuthJoinRouteRouteChildren = {
-  AuthJoinSuccessRoute: AuthJoinSuccessRoute,
+  AuthJoinSuccessRoute: AuthJoinSuccessRoute
 }
 
 const AuthJoinRouteRouteWithChildren = AuthJoinRouteRoute._addFileChildren(
-  AuthJoinRouteRouteChildren,
+  AuthJoinRouteRouteChildren
 )
 
 const rootRouteChildren: RootRouteChildren = {
@@ -188,6 +208,7 @@ const rootRouteChildren: RootRouteChildren = {
   RoomRoute: RoomRoute,
   AuthJoinRouteRoute: AuthJoinRouteRouteWithChildren,
   AuthLoginRoute: AuthLoginRoute,
+  ProjectsProjectIdRoute: ProjectsProjectIdRoute
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
