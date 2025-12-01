@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import type { ProjectsList, Project } from '../types'
-import { getProjects } from '../api'
+import type { ProjectsList, Project } from './types'
+import { getProjects } from '~entities/project/api'
 
 interface projectState {
   projects: ProjectsList
@@ -23,6 +23,7 @@ export const useProjectsStore = create<projectState>((set, get) => {
     },
     fetchProjects: async () => {
       const result = await getProjects()
+      console.log(result)
       set({
         projects: {
           msg: 'success',

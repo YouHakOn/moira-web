@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import type { FieldError } from 'react-hook-form'
 
 function FormInput({
   label,
@@ -6,7 +7,7 @@ function FormInput({
   children
 }: {
   label?: string
-  error?: string
+  error?: string | FieldError
   children?: ReactNode
 }) {
   return (

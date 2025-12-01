@@ -6,8 +6,8 @@ import Sidebar from '~widgets/Sidebar'
 import ModalRoot from '~widgets/modal/ModalRoot'
 
 import type { StoreApi } from 'zustand'
-import { useUserStore, type UserState } from '~entities/user/model/userStore'
-import { useProjectsStore } from '~entities/project/model/projectStore'
+import { useUserStore, type UserState } from '~entities/user/userStore'
+import { useProjectsStore } from '~entities/project/projectStore'
 
 interface MyRouterContext {
   userStore: StoreApi<UserState>
@@ -54,7 +54,7 @@ function RootComponent() {
   const { projects, fetchProjects } = useProjectsStore()
   useEffect(() => {
     if (isLoggedIn) {
-      fetchProjects()
+      fetchProjects() // 유저의 프로젝트 리스트 가져오기
       console.log(projects.data)
     }
   }, [isLoggedIn, fetchProjects])

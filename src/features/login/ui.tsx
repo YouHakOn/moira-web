@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useUserStore } from '~entities/user/model/userStore'
-import { getLogin, getMyInfo } from '~entities/auth/login/api'
+import { useUserStore } from '~entities/user/userStore'
+import { getLogin, getMyInfo } from '~features/login/api'
 
 export default function LoginForm({ redirect }: { redirect: () => void }) {
   const [email, setEmail] = useState('')

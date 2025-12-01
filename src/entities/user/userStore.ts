@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { useProjectsStore } from '~entities/project/model/projectStore'
+import { useProjectsStore } from '~entities/project/projectStore'
 
 export interface UserState {
   id: number | null

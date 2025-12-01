@@ -3,9 +3,9 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormInput } from '~shared/ui/FormInput'
 import { useState } from 'react'
-import { joinSchema } from '~entities/auth/join/joinSchema'
-import type { Inputs } from '~entities/auth/join/types'
-import { join, checkCode, createCode } from '~entities/auth/join/api'
+import { joinSchema } from '~features/join/schema'
+import type { Inputs } from '~features/join/types'
+import { join, checkCode, createCode } from '~features/join/api'
 
 export default function JoinForm() {
   const [isCreateCode, setIsCreateCode] = useState<boolean>(false)

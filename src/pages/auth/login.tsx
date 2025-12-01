@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router'
-import LoginForm from '~entities/auth/login/ui/LoginForm'
+import LoginForm from '~features/login/ui'
 
 export const Route = createFileRoute('/auth/login')({
   validateSearch: (search) => ({
