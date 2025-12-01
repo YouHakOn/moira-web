@@ -25,7 +25,7 @@ export const createProject = async (projectTitle: string) => {
 }
 
 // 프로젝트 참가
-// 프로젝트 url 검증  티켓 발급
+// 프로젝트 url 검증 및 티켓 발급
 export const getTicket = async ({ projectUrl, name }: GuestInputs) => {
   try {
     const res = await authInstance.post<EnterProjectRes>(`/enter/project/${projectUrl}`, {

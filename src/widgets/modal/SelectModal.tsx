@@ -1,4 +1,4 @@
-import { useModalStore } from '~entities/modal/model/modalStore'
+import { useModalStore } from '~features/manage-modal/modalStore'
 
 export function SelectModal() {
   const { open, close } = useModalStore()

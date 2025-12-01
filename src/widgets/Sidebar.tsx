@@ -1,8 +1,7 @@
-import { useEffect } from 'react'
 import { Link } from '@tanstack/react-router'
-import { useModalStore } from '~entities/modal/model/modalStore'
-import { useProjectsStore } from '~entities/project/model/projectStore'
-import { useUserStore } from '~entities/user/model/userStore'
+import { useModalStore } from '~features/manage-modal/modalStore'
+import { useProjectsStore } from '~entities/project/projectStore'
+import type { Project } from '~entities/project/types'
 
 export default function Sidebar() {
   const { open } = useModalStore()
@@ -12,7 +11,7 @@ export default function Sidebar() {
     <aside>
       <nav>
         <Link to="/">Home</Link>
-        {projects.data.map((p) => (
+        {projects.data.map((p: Project) => (
           <Link key={p.id} to="/projects/$projectId" params={{ projectId: `${p.id}` }}>
             {p.title}
           </Link>

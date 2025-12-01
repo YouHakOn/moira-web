@@ -1,14 +1,10 @@
-import { useModalStore } from '~entities/modal/model/modalStore'
+import { useModalStore } from '~features/manage-modal/modalStore'
 import { SelectModal } from './SelectModal'
-import { CreateProjectModal } from './CreateProjectModal'
-import { SearchProjectModal } from './SearchProjectModal'
-import { useCreateProject } from '~features/project/useCreateProject'
-import { useSearchProject } from '~features/project/useSearchProject'
+import { CreateProjectModal } from '../../features/enter-project/ui/CreateProjectModal'
+import { SearchProjectModal } from '../../features/enter-project/ui/SearchProjectModal'
 
 export default function ModalRoot() {
   const { modal, close } = useModalStore()
-  const { createError, title, setTitle, handleCreateSubmit } = useCreateProject()
-  const { searchError, projectUrl, setProjectUrl, handleSearchSubmit } = useSearchProject()
   if (!modal) return null
   if (modal)
     return (
@@ -19,22 +15,8 @@ export default function ModalRoot() {
             bg-white rounded-xl p-6 shadow-lg w-[400px]"
         >
           {modal === 'select' && <SelectModal />}
-          {modal === 'create' && (
-            <CreateProjectModal
-              error={createError}
-              title={title}
-              onChangeTitle={setTitle}
-              onSubmit={handleCreateSubmit}
-            />
-          )}
-          {modal === 'search' && (
-            <SearchProjectModal
-              error={searchError}
-              url={projectUrl}
-              onChangeUrl={setProjectUrl}
-              onSubmit={handleSearchSubmit}
-            />
-          )}
+          {modal === 'create' && <CreateProjectModal />}
+          {modal === 'search' && <SearchProjectModal />}
         </div>
       </>
     )
