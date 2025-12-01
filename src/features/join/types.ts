@@ -1,5 +1,5 @@
 import z from 'zod'
-import { joinSchema } from './joinSchema'
+import { joinSchema } from './schema'
 
 export type Inputs = z.infer<typeof joinSchema>
 

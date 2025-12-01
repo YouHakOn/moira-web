@@ -1,7 +1,7 @@
 import { createRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
-import { useUserStore } from '~entities/user/model/userStore'
-import { getMyInfo } from '~entities/auth/login/api'
+import { useUserStore } from '~entities/user/userStore'
+import { getMyInfo } from '~features/login/api'
 
 const userStore = useUserStore
 // Create a new router instance

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import JoinForm from '~entities/auth/join/ui/JoinForm'
+import JoinForm from '~features/join/ui'
 
 export const Route = createFileRoute('/auth/join')({
   component: RouteComponent
