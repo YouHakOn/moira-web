@@ -31,9 +31,9 @@ export const getTicket = async ({ projectUrl, name }: GuestInputs) => {
     const res = await authInstance.post<EnterProjectRes>(`/enter/project/${projectUrl}`, {
       alias: name
     })
+    console.log(`프로젝트 검증 성공:`, res)
     return res.data.msg
   } catch (err: any) {
-    console.log(err)
     throw new Error(err?.msg || '프로젝트 참가 실패')
   }
 }
