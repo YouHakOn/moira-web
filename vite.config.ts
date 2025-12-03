@@ -16,6 +16,9 @@ export default defineConfig({
       generatedRouteTree: join(__dirname, './src/app/routeTree.gen.ts')
     })
   ],
+  define: {
+    global: {}
+  },
   resolve: {
     alias: {
       '~': join(__dirname, './src'),

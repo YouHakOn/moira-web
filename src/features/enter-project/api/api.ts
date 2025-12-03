@@ -1,19 +1,16 @@
 import { authInstance } from '~shared/api/instance'
 import type { CreateProjectRes, EnterProjectRes } from '../../../entities/project/types'
-import { getProjects } from '~entities/project/api'
 import type { GuestInputs } from '../model/type'
 
 // 프로젝트 생성
-export const createProject = async (projectTitle: string) => {
+export const createProject = async (projectTitle: string, projectId: number) => {
   try {
-    const projects = await getProjects()
-    const id = projects.length
     const res = await authInstance.post<CreateProjectRes>('/project/create', {
-      id: id,
+      id: projectId,
       title: projectTitle
     })
     return {
-      id: id,
+      id: projectId,
       title: projectTitle,
       url: res.data.msg // 링크 생성
     }

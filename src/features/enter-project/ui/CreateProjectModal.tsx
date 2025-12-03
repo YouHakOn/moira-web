@@ -9,7 +9,7 @@ import { useProjectsStore } from '~entities/project/projectStore'
 
 export function CreateProjectModal() {
   const { close } = useModalStore()
-  const { update } = useProjectsStore()
+  const { projects, update } = useProjectsStore()
   const {
     handleSubmit,
     register,
@@ -22,10 +22,11 @@ export function CreateProjectModal() {
   const onSubmit: SubmitHandler<HostInputs> = async (data) => {
     console.log(data)
     try {
-      const newProject = await createProject(data.projectTitle)
+      const newProject = await createProject(data.projectTitle, projects.data.length)
       // 생성 후 티켓 발급 받음
       console.log(`프로젝트 생성 성공:`, newProject)
       update(newProject)
+      console.log('store projects', useProjectsStore.getState().projects)
       close()
     } catch (err: any) {
       console.log(`프로젝트 생성 실패: ${err}`)
