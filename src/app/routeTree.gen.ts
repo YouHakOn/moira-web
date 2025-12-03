@@ -21,41 +21,41 @@ import { Route as AuthJoinSuccessRouteImport } from './../pages/auth/join/succes
 const RoomRoute = RoomRouteImport.update({
   id: '/room',
   path: '/room',
-  getParentRoute: () => rootRouteImport
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BoardRoute = BoardRouteImport.update({
   id: '/board',
   path: '/board',
-  getParentRoute: () => rootRouteImport
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
-  getParentRoute: () => rootRouteImport
+  getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
   id: '/projects/$projectId',
   path: '/projects/$projectId',
-  getParentRoute: () => rootRouteImport
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthLoginRoute = AuthLoginRouteImport.update({
   id: '/auth/login',
   path: '/auth/login',
-  getParentRoute: () => rootRouteImport
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthJoinRouteRoute = AuthJoinRouteRouteImport.update({
   id: '/auth/join',
   path: '/auth/join',
-  getParentRoute: () => rootRouteImport
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthJoinSuccessRoute = AuthJoinSuccessRouteImport.update({
   id: '/success',
   path: '/success',
-  getParentRoute: () => AuthJoinRouteRoute
+  getParentRoute: () => AuthJoinRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -194,11 +194,11 @@ interface AuthJoinRouteRouteChildren {
 }
 
 const AuthJoinRouteRouteChildren: AuthJoinRouteRouteChildren = {
-  AuthJoinSuccessRoute: AuthJoinSuccessRoute
+  AuthJoinSuccessRoute: AuthJoinSuccessRoute,
 }
 
 const AuthJoinRouteRouteWithChildren = AuthJoinRouteRoute._addFileChildren(
-  AuthJoinRouteRouteChildren
+  AuthJoinRouteRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
@@ -208,7 +208,7 @@ const rootRouteChildren: RootRouteChildren = {
   RoomRoute: RoomRoute,
   AuthJoinRouteRoute: AuthJoinRouteRouteWithChildren,
   AuthLoginRoute: AuthLoginRoute,
-  ProjectsProjectIdRoute: ProjectsProjectIdRoute
+  ProjectsProjectIdRoute: ProjectsProjectIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
