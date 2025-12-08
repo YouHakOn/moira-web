@@ -23,7 +23,6 @@ export const useProjectsStore = create<projectState>((set, get) => {
     },
     fetchProjects: async () => {
       const result = await getProjects()
-      console.log(result)
       set({
         projects: {
           msg: 'success',

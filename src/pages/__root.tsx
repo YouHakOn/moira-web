@@ -59,6 +59,10 @@ function RootComponent() {
     }
   }, [isLoggedIn, fetchProjects])
 
+  useEffect(() => {
+    console.log(projects.data)
+  }, [projects])
+
   return (
     <React.Fragment>
       <ModalRoot />

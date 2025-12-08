@@ -17,7 +17,7 @@ export default defineConfig({
     })
   ],
   define: {
-    global: {}
+    global: 'window'
   },
   resolve: {
     alias: {
@@ -40,6 +40,11 @@ export default defineConfig({
         secure: false,
         // 요청 경로에서 '/api' 제거
         rewrite: (path) => path.replace(/^\/api/, '')
+      },
+      '/ws': {
+        target: 'http://localhost:8080',
+        ws: true,
+        changeOrigin: true
       }
     }
   }
