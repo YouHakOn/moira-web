@@ -57,10 +57,10 @@ export default function JoinForm() {
 
   // 이메일 인증이 안 이뤄졌을 시엔 비활성화
   const onCheckCode = async () => {
-    const emailInput = encodeURIComponent(watch('email'))
-    const codeInput = encodeURIComponent(watch('code'))
+    // const emailInput = encodeURIComponent(watch('email'))
+    // const codeInput = encodeURIComponent(watch('code'))
     try {
-      const res = await checkCode(emailInput, codeInput)
+      const res = await checkCode(watch('email'), watch('code'))
       console.log(`인증 성공: ${res.data}`)
     } catch (err: any) {
       console.log(`인증 실패: ${err}`)
